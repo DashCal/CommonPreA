@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Local Wu - Passion Drives 热爱使燃</title>
+    <style>
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            /* Prevent horizontal scrolling by default */
+        }
+
+        .image-container {
+            width: 100%;
+            text-align: center;
+            margin: 0 auto;
+            padding: 0;
+        }
+
+        .image-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="image-container">
+        <img id="responsive-image" src="" alt="Responsive Image">
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const imageElement = document.getElementById('responsive-image');
+            const breakpoints = {
+                'phone': 576,
+                'tablet': 768,
+                'laptop': 1024,
+                'desktop': 1440
+            };
+
+            const imageSrcs = {
+                'phone': 'images/phone.png',
+                'tablet': 'images/tablet.png',
+                'laptop': 'images/laptop.png',
+                'desktop': 'images/desktop.png',
+                'ultrawide': 'images/ultrawide.png'
+            };
+
+            function updateImage() {
+                const screenWidth = window.innerWidth;
+                let screenSize;
+
+                if (screenWidth < breakpoints.phone) {
+                    screenSize = 'phone';
+                } else if (screenWidth < breakpoints.tablet) {
+                    screenSize = 'tablet';
+                } else if (screenWidth < breakpoints.laptop) {
+                    screenSize = 'laptop';
+                } else if (screenWidth < 2560) { // Example threshold for ultrawide, adjust as needed  
+                    screenSize = 'desktop';
+                } else {
+                    screenSize = 'ultrawide';
+                }
+
+                imageElement.src = imageSrcs[screenSize];
+            }
+
+            updateImage(); // Initial call to set the image  
+
+            // Function to update image on window resize  
+            window.addEventListener('resize', updateImage);
+        });
+    </script>
+</body>
+
+</html>
