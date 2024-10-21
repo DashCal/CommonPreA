@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Progressive Mosaic Pixel Rendering Motion Effect For The Avatar</title>
+    <style>
+        body {
+            background-color: lavender;
+        }
+
+        canvas {
+            /* border: 1px solid rgb(255, 0, 0); */
+            display: block;
+            margin: 0 auto;
+            image-rendering: pixelated;
+        }
+        #LocalWuAvatar{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="LocalWuAvatar">
+        <canvas id="ofcanvas" width="64" height="64" style="display: none;"></canvas>
+        <canvas id="pixelCanvas" width="64" height="64"
+            style="user-select: none; width: 360px; height: 360px;"></canvas>
+    </div>
+    <script>
+        const LocalWuAvatar = document.getElementById('LocalWuAvatar');
+        LocalWuAvatar.addEventListener('contextmenu', function (event) {
+            event.preventDefault();
+        }, false);
+
+        const ofcanvas = document.getElementById('ofcanvas');
+        const ofctx = ofcanvas.getContext('2d');
+        const canvas = document.getElementById('pixelCanvas');
+        const ctx = canvas.getContext('2d');
+        const img = new Image();
+
+        let String64 = 'data:image/png;base64,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';
+
+        img.src = String64;
+
+        let pixels = [];
+        let rendered = Array(64).fill(false).map(() => Array(64).fill(false));
+
+        img.onload = function () {
+            ofctx.drawImage(img, 0, 0);
+            const imageData = ofctx.getImageData(0, 0, ofcanvas.width, ofcanvas.height);
+            const data = imageData.data;
+            for (let y = 0; y < ofcanvas.height; y++) {
+                for (let x = 0; x < ofcanvas.width; x++) {
+                    const index = (y * ofcanvas.width + x) * 4;
+                    const alpha = data[index + 3];
+                    if (alpha > 0 && data[index] != 255 && data[index + 1] != 255 && data[index + 2] != 255) { // 如果像素不是透明的
+                        pixels.push({ x, y, r: data[index], g: data[index + 1], b: data[index + 2], a: alpha });
+                    }
+                }
+            }
+            renderProgressively();
+        };
+
+        function renderProgressively() {
+            const rowsPerFrame = 1;
+            let currentRow = 0;
+            let currentColumn = 0;
+            let pixelCounter = 0;
+            function renderFrame() {
+                if (currentRow >= canvas.height) {
+                    console.log('Rendering completed.' + pixelCounter);
+                    return;
+                }
+                renderRow();
+                currentRow++;
+                currentColumn = 0; 
+            }
+
+            function renderRow() {
+                if (currentColumn >= canvas.width) {
+                    console.log('Row Rendering completed.');
+                    return;
+                }
+                requestAnimationFrame(renderPixel);
+            }
+
+            function renderPixel() {
+                let pixel;
+                while (currentColumn < canvas.width) {
+                    pixel = pixels.find(p => p.x === currentColumn && p.y === currentRow);
+                    if (pixel) {
+                        ctx.fillStyle = `rgba(${pixel.r}, ${pixel.g}, ${pixel.b}, ${pixel.a / 255})`;
+                        ctx.fillRect(currentColumn, currentRow, 1, 1);
+                        currentColumn++;
+                        pixelCounter++;
+                        break;
+                    } else {
+                        currentColumn++;
+                    }
+                }
+                if (currentColumn < canvas.width) {
+                    requestAnimationFrame(renderPixel);
+                } else {
+                    currentColumn = 0;
+                    renderFrame();
+                }
+            }
+            renderFrame();
+        }
+    </script>
+
+</body>
+
+</html>
