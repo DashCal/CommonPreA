@@ -1,0 +1,199 @@
+:root {
+    --background-color: #f5f5f5;
+    --text-color: #656565;
+    --dtext-color: #353535;
+    --code-font-color: #343434;
+    --code-instruction-font-color: #868690;
+
+    --orig-width: 1440;
+    --orig-height: 900;
+    --orig-statebar-height: 140;
+    --orig-code-section-height: 170;
+    --orig-code-font-height: 85;
+    --orig-code-instruction-font-height: 50;
+    --orig-code-section-paddingtop-height: 74;
+    --orig-code-section-paddingbtm-height: 50;
+
+    --orig-qrcode-size: 680;
+    --orig-qrcode-instruction-height: 00;
+
+
+
+    --state-bar-height: calc(100vw * var(--orig-statebar-height)/ var(--orig-width));
+
+
+    --code-font-size: 31px;
+    --code-instruction-font-size: 14px;
+
+    --code-section-height: calc(100vw * var(--orig-code-section-height)/ var(--orig-width));
+    --code-font-section-height: calc(100vw * var(--orig-code-font-height)/ var(--orig-width));
+    --code-instruction-font-section-height: calc(100vw * var(--orig-code-instruction-font-height)/ var(--orig-width));
+    --code-section-paddingtop-height: calc(100vw * var(--orig-code-section-paddingtop-height)/ var(--orig-width));
+    --code-section-paddingbtm-height: calc(100vw * var(--orig-code-section-paddingbtm-height)/ var(--orig-width));
+
+    --qrcode-size: calc(100vw * var(--orig-qrcode-size)/ var(--orig-width));
+    --qrcode-instruction-size: 0;
+}
+
+body {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    height: fit-content;
+    min-height: 400px;
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    background-color: var(--background-color);
+    display: flex;
+    overflow-x: hidden;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-content: center;
+
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+#loader {
+    height: 100%;
+    width: 100%;
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+    position: fixed;
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.takeoutcode-container {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.takeoutcode-container {
+    .state-bar {
+        height: var(--state-bar-height);
+        width: 100%;
+    }
+
+    .bgimg-stack {
+        width: 100%;
+        display: block;
+    }
+
+    .tk-code {
+        height: var(--code-section-height);
+        width: 100%;
+        padding-top: var(--code-section-paddingtop-height);
+        padding-bottom: var(--code-section-paddingbtm-height);
+
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        align-content: center;
+        justify-content: space-between;
+        align-items: center;
+
+
+        .thecode {
+            /* border: gray 2px solid; */
+            height: var(--code-font-section-height);
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            flex-wrap: nowrap;
+            align-content: center;
+            justify-content: center;
+            align-items: center;
+
+            input {
+                background: none;
+                border: none;
+                text-align: center;
+            }
+
+            #THETKCODE {
+                font-size: var(--code-font-size);
+                letter-spacing: -.5px;
+                font-weight: medium;
+                font-weight: 500;
+                color: var(--code-font-color);
+            }
+        }
+
+        .thecode-instruction {
+            height: var(--code-instruction-font-section-height);
+            width: 100%;
+            text-align: center;
+            line-height: var(--code-instruction-font-size);
+            font-size: var(--code-instruction-font-size);
+            letter-spacing: .2px;
+            font-weight: medium;
+            font-weight: 400;
+            color: var(--code-instruction-font-color);
+        }
+    }
+
+    .tk-qrcode {
+        height: var(--qrcode-size);
+        width: 100%;
+        padding-bottom: 2px;
+
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        align-content: center;
+        justify-content: center;
+        align-items: center;
+
+
+        .qrcode-canvas-container {
+            height: 100%;
+            width: var(--qrcode-size);
+            border: white 2px solid;
+
+            .qrcode-canvas {
+                height: 100%;
+                width: 100%;
+            }
+        }
+    }
+
+    .tk-qrcode-instruction {
+        height: var(--qrcode-instruction-size);
+        width: 100%;
+
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        align-content: center;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .tk-other {
+        width: 100%;
+    }
+}
